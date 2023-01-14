@@ -1,7 +1,16 @@
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://127.0.0.1:27017/dev", {})
+  .connect(
+    "mongodb+srv://devnew:ashishtech@cluster0.0mkjw2h.mongodb.net/test",
+    // "mongodb://localhost:27020/mydb",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
-    console.log("connection successfull");
+    console.log("database connected");
   })
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.log("Could not connect", err);
+  });
