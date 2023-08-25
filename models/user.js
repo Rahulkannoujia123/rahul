@@ -9,9 +9,19 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  address: {
+    type:String
+  },
+  phone: {
+    type: String,
+    unique:true
+  },
   password: {
     type: String,
     required: true,
+  },
+  roles: {
+    type: Array,
   },
 });
 

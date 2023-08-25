@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const portfolioSchema = new mongoose.Schema({
-  name: String,
+  title: String,
   description: String,
   image: String,
+  url: String,
   date: {
     type: Date,
     default: Date.now,

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose
   .connect(
-    "mongodb+srv://devnew:ashishtech@cluster0.0mkjw2h.mongodb.net/test",
+    "mongodb+srv://dev2:ashishtech@dev2.e6btfbw.mongodb.net/test",
     // "mongodb://localhost:27020/mydb",
     {
       useNewUrlParser: true,

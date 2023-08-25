@@ -4,20 +4,18 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userid: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-    },
-  ],
+  userid: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
+  
   file: String,
   url: String,
-  mobile: {
-    type: String,
-    required: true,
-  },
   date: {
     type: Date,
     default: Date.now,
+  },
+  status: {
+    type: Number,
   },
 });
 const order = mongoose.model("order", orderSchema);
