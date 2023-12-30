@@ -29,4 +29,9 @@ const generateTokens = async (id) => {
   }
 };
 
-module.exports = { generateTokens };
+const getUserFromToken= (req)=>{
+  
+return 'ashish'
+}
+
+module.exports = { generateTokens,getUserFromToken };

@@ -37,7 +37,7 @@ router.get("/post/:id", async (req, res) => {
     });
   }
 });
-router.post("/post", async (req, res) => {
+router.post("/post",checkrole, async (req, res) => {
   const { title } = req.body;
   try {
     await new Post({
@@ -50,7 +50,7 @@ router.post("/post", async (req, res) => {
         res.json({
           success: true,
           message: "Published!",
-          user: data,
+          post: data,
         });
         if (data.category) {
           await Category.updateMany(

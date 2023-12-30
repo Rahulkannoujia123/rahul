@@ -14,3 +14,4 @@ mongoose
   .catch((err) => {
     console.log("Could not connect", err);
   });
+process.on("unhandledRejection", (err) => console.log("----unhandled error---", err.message));

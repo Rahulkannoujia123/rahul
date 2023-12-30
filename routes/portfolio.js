@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Portfolio = require("../models/portfolio");
 const { verifyUser } = require("../middleware/common");
-router.get("/portfolio", verifyUser, async (req, res) => {
+router.get("/portfolio", async (req, res) => {
   try {
     const portfolio = await Portfolio.find();
     if (portfolio) {
@@ -59,7 +59,7 @@ router.put("/portfolio/:id", async (req, res) => {
         message: "500",
       });
 });
-router.delete("/portfolio/:id", async (req, res) => {
+router.delete("/portfolio/:id",verifyUser, async (req, res) => {
   const id = req.params.id;
   isexist = await Portfolio.findOne({ _id: id });
   if (isexist) {

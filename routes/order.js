@@ -2,11 +2,11 @@ const express = require("express");
 const { verify } = require("jsonwebtoken");
 const Order = require("../models/order");
 const { verifyUser } = require("../middleware/common");
+
 const router = new express.Router();
 router.post("/order", async (req, res) => {
-  const { description, userid, file, url, mobile, status } = req.body;
+  const { description, file, url, mobile, status } = req.body;
   const order = new Order({
-    userid,
     description,
     file,
     url,
@@ -25,21 +25,24 @@ router.post("/order", async (req, res) => {
     .catch((err) => {
       res.status(500).json({
         success: false,
-        messgae: "Internal server error",
+        message: "Internal server error",
       });
     });
 });
 
-router.get("/order", verifyUser, async (req, res) => {
-  const order = await Order.find();
-  if (order) {
-    res.status(200).json(order);
-  } else {
-    res.status(500).json({
-      success: false,
-      message: "Inetrnal server error",
-    });
-  }
+router.get("/order",verifyUser, async (req, res,next) => {
+     Order.find((err,data)=>{
+      if(err){
+       return res.status(500).json({
+          message:'500'
+        })
+      }else{
+     return res.json({
+          order:data
+        })
+      }
+    })
+  
 });
 router.get("/order/:id", verifyUser, async (req, res) => {
   Order.findOne({ _id: req.params.id }, (err, data) => {

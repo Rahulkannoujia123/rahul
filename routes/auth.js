@@ -7,17 +7,20 @@ const { verifyRefreshToken } = require("../utils/verifyRefreshToken");
 const router = new express.Router();
 const refreshTokens = [];
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password,role } = req.body;
   const encriptedPassword = await bcrypt.hash(password, 10);
   try {
     const isExistingUser = await User.findOne({ email });
     if (isExistingUser != null) {
       return res.json({ success: false, message: "user already exist" });
     } else {
-      await new User({ name, email, password: encriptedPassword }).save(
+      await new User({ name, email, password: encriptedPassword,roles:[role] }).save(
         (err, data) => {
           if (err) {
-            res.json({ error: err });
+            res.json({ 
+              success:false,
+              message:err
+             });
           } else {
             res.json({
               success: true,
@@ -88,7 +91,6 @@ router.post("/google-login",async (req,res)=>{
   const userexist=await User.findOne({ email });
   if(userexist._id){
     const { accessToken, refreshToken } = await generateTokens(userexist._id);
-    console.log(accessToken)
      res.status(200).json({
        success: true,
        data: {

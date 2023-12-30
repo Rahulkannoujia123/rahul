@@ -4,9 +4,9 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userid: {
-    type: mongoose.Schema.Types.ObjectId,
-  },
+  // userid: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  // },
   
   file: String,
   url: String,

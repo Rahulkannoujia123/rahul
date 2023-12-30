@@ -3,11 +3,9 @@ const { userToken } = require("../models/usertoken");
  const verifyRefreshToken = (refreshToken) => {
     const privateKey = process.env.REFRESS_TOKEN_SECRET;
 
-    return new Promise((resolve, reject) => {
+    return  new Promise( (resolve, reject) => {
         userToken.findOne({ token: refreshToken}, (err, doc) => {
-            if (!doc)
-                return reject({ error: true, message: "Invalid refresh token" });
-
+            if (!doc) return reject({ error: true, message: "refresh token not macthed" });
             jwt.verify(refreshToken, privateKey, (err, tokenDetails) => {
                 if (err)
                     return reject({ error: true, message: "Invalid refresh token" });
@@ -17,7 +15,7 @@ const { userToken } = require("../models/usertoken");
                     message: "Valid refresh token",
                 });
             });
-        });
+        })
     });
 };
 module.exports={verifyRefreshToken}
