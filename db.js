@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose
   .connect(
-    "mongodb+srv://dev2:ashishtech@dev2.e6btfbw.mongodb.net/test",
+    process.env.MONGO_URL,
     // "mongodb://localhost:27020/mydb",
     {
       useNewUrlParser: true,
