@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Portfolio = require("../models/portfolio");
 const { verifyUser } = require("../middleware/common");
-router.get("/portfolio", async (req, res) => {
+const httpcodes=require("../utils/httpcode");
+router.get("/portfolio",verifyUser, async (req, res) => {
     try {
         const portfolio = await Portfolio.find();
         if (portfolio) {
@@ -46,18 +47,19 @@ router.post("/portfolio", verifyUser, async (req, res) => {
         }
     });
 });
-router.put("/portfolio/:id", async (req, res) => {
+router.put("/portfolio/:id",verifyUser, async (req, res) => {
     const id = req.params.id;
     const result = await Portfolio.updateOne({ _id: id }, { ...req.body });
-    result
-        ? res.json({
-              success: true,
-              message: "updated successfully",
-          })
-        : res.json({
-              success: false,
-              message: "500",
-          });
+    if (result) {
+        return res.json({
+            success: true,
+            message: "updated successfully",
+        });
+    }
+   return res.json({
+        success: false,
+        message: httpcodes.success.message
+    });
 });
 router.delete("/portfolio/:id", verifyUser, async (req, res) => {
     const id = req.params.id;

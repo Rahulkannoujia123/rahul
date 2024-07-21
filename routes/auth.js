@@ -8,7 +8,7 @@ const user = require("../models/user");
 const router = new express.Router();
 const refreshTokens = [];
 router.post("/register", async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
     const encriptedPassword = await bcrypt.hash(password, 10);
     try {
         const isExistingUser = await User.findOne({ email });
@@ -18,8 +18,7 @@ router.post("/register", async (req, res) => {
             await new User({
                 name,
                 email,
-                password: encriptedPassword,
-                roles: ["user"],
+                password: encriptedPassword
             }).save((err, data) => {
                 if (err) {
                     res.json({

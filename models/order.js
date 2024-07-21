@@ -5,7 +5,8 @@ const orderSchema = new mongoose.Schema({
         required: true,
     },
     userid: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
+        required:true
     },
 
     file: String,
@@ -13,6 +14,9 @@ const orderSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now,
+    },
+    whatsapp:{
+        type:Number
     },
     status: {
         type: Number,

@@ -7,11 +7,17 @@ require("dotenv").config();
 app.use(
     cors({
         origin: "*",
+        credentials:true,
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        allowedHeaders: [
+            'Access-Control-Allow-Origin',
+            'Content-Type',
+            'Authorization'
+          ]
     })
 );
 app.use(cookieParser());
-app.use(express.json({ limit: "50mb" }));
+app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/upload", express.static(path.join(__dirname, "upload")));
@@ -19,7 +25,9 @@ app.use("/upload", express.static(path.join(__dirname, "upload")));
 require("./db");
 const authRouter = require("./routes/auth");
 const portfolioRouter = require("./routes/portfolio");
+const profileRouter = require("./routes/profile");
 const orderRouter = require("./routes/order");
+const adminRouter = require("./routes/admin");
 const uploadRouter = require("./routes/upload");
 const mailRouter = require("./routes/sendmail");
 const paymentRouter = require("./routes/payment/payment");
@@ -31,8 +39,10 @@ app.use(paymentRouter);
 app.use(paymentVerify);
 
 app.use(authRouter);
+app.use(adminRouter);
 app.use(orderRouter);
 app.use(portfolioRouter);
+app.use(profileRouter);
 app.use(uploadRouter);
 app.use(mailRouter);
 app.use(dashbaordRouter);

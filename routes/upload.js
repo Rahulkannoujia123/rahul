@@ -7,7 +7,7 @@ router.post("/upload", upload.single("file"), (req, res) => {
             success: true,
             file: {
                 name: req.file.filename,
-                url: `http://localhost:4000/upload/${req.file.filename}`,
+                url: `${process.env.APP_URL}/upload/${req.file.filename}`,
             },
         });
     } else {
