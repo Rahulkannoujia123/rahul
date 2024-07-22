@@ -13,7 +13,7 @@ router.post("/upload", upload.single("file"), (req, res) => {
     } else {
         res.json({
             success: false,
-            message: err,
+            message: err.message,
         });
     }
 });
