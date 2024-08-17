@@ -8,12 +8,8 @@ app.use(
     cors({
         origin: "*",
         credentials:true,
-        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-        allowedHeaders: [
-            'Access-Control-Allow-Origin',
-            'Content-Type',
-            'Authorization'
-          ]
+        crossorigin: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
     })
 );
 app.use(cookieParser());
@@ -21,7 +17,15 @@ app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/upload", express.static(path.join(__dirname, "upload")));
-
+app.get("/cookie",(req,res)=>{
+    res.cookie("dev",'ashish',{
+  
+    })
+    res.json({
+        success:true,
+        message:"cookie set"
+    })
+})
 require("./db");
 const authRouter = require("./routes/auth");
 const portfolioRouter = require("./routes/portfolio");
@@ -35,6 +39,7 @@ const paymentVerify = require("./routes/payment/verify");
 const dashbaordRouter = require("./routes/dashboard");
 const multerErrorHandler = require("./middleware/multerhandler");
 const { roles } = require("./config/roles");
+const {success}=require("./utils/httpcode");
 app.use(paymentRouter);
 app.use(paymentVerify);
 

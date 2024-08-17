@@ -6,6 +6,7 @@ const courseSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    syllabus:[],
     image: {
         type: String,
     },

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { generateTokens } = require("../utils/generateTokens");
 const { verifyRefreshToken } = require("../utils/verifyRefreshToken");
 const user = require("../models/user");
+const {verifyUser}=require("../middleware/common");
 const router = new express.Router();
 const refreshTokens = [];
 router.post("/register", async (req, res) => {
@@ -62,7 +63,9 @@ router.post("/login", async (req, res) => {
             });
         } else {
             const { accessToken, refreshToken } = await generateTokens(user);
-
+            res.cookie('myCookie', 'cookieValue', {
+                domain:'localhost',
+                maxAge: 900000, httpOnly: true });
             res.status(200).json({
                 success: true,
                 data: {
@@ -152,6 +155,11 @@ router.patch("/reset-password", async (req, res) => {
         });
     }
 });
+router.post('/logout',verifyUser,async (req,res)=>{
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.json({})
+})
 
 router.post("/google-login", async (req, res) => {
     const { email, name } = req.body;
